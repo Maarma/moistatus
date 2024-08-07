@@ -18,7 +18,10 @@ Route::get('/moistatused', function () {
 })->name('questions');
 
 Route::get('/moistatus/{id}', function ($id) {
-    return view('riddle');
+    $question = DB::table('questions')->find($id);
+    return view('riddle', [
+        'question' => $question,
+    ]);
 })->name('riddle');
 
 
