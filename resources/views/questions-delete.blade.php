@@ -11,9 +11,6 @@
                         <div class="w-full h-full text-lg font-bold lg:w-3/4 lg:text-2xl">
                             <h1 class="text-[#FEE2C5] w-full text-start">{{ $question->question }}</h1>
                         </div>
-                        <div class="pt-4 lg:pt-0 lg:flex absolute bottom-2 left-4 text-[#FEE2C5]">
-                            {{ $question->created_at }}
-                        </div>
                     </div>
                 </div>
 
