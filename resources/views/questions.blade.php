@@ -10,7 +10,9 @@
             
             @foreach ($question as $question)
             <div class="flex flex-col items-center">
-                <a href="/moistatus/{{ $question->id }}" class="border-2 rounded border-[#4F6D7A] bg-[#C0D6DF] w-fit py-12 px-20"><h1 class="text-2xl font-bold">Mõistatus {{ $question->id }} </h1></a>
+                <a href="/moistatus/{{ $question->id }}" class="border-2 rounded border-[#4F6D7A] bg-[#C0D6DF] w-fit py-12 px-20">
+                    <h1 class="text-2xl font-bold">Mõistatus {{ $loop->iteration }}</h1>
+                </a>
                 @if (Auth::user())
                     <div class=" text-black flex h-10 items-center">
                         <a href="/moistatused/edit/{{ $question->id }}" class="h-full w-fit flex items-center">Muuda</a>
