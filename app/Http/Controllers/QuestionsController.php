@@ -92,4 +92,14 @@ class QuestionsController extends Controller
         $item->save();
         return redirect()->route('questions')->with('success', 'Data updated successfully.');
     }
+
+    public function deleteQuestions(Request $request, )
+    {
+        $id_list = explode('&', $_SERVER['QUERY_STRING']);
+        $id = $id_list[0];
+
+        $item = Questions::findOrFail($id);
+        $item->delete();
+        return redirect()->route('questions')->with('success', 'Data updated successfully.');
+    }
 }

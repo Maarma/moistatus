@@ -15,7 +15,7 @@
                     <div class=" text-black flex h-10 items-center">
                         <a href="/moistatused/edit/{{ $question->id }}" class="h-full w-fit flex items-center">Muuda</a>
                         <div class="w-[3px] h-6 bg-[#4F6D7A] mx-4 rounded-lg"></div>
-                        <a href="" class="h-full w-fit flex items-center">Kustuta</a>
+                        <a href="/moistatused/delete/{{ $question->id }}" class="h-full w-fit flex items-center">Kustuta</a>
                     </div>
                 @endif
             </div>

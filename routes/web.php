@@ -43,6 +43,14 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('questions.edit');
     Route::post('/moistatused/edit/post', [QuestionsController::class, 'editQuestions'])->name('admin.questions.update');
+
+    Route::get('/moistatused/delete/{id}', function ($id) {
+        $question = DB::table('questions')->where('id', $id)->get()[0];
+        return view('questions-delete', [
+            'question' => $question
+        ]);
+    })->name('questions.delete');
+    Route::post('/moistatused/delete/post', [QuestionsController::class, 'deleteQuestions'])->name('admin.questions.delete');
 });
 
 require __DIR__.'/auth.php';
