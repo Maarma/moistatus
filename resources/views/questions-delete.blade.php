@@ -1,15 +1,15 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-4 mb-4 bg-[#414141] flex items-center rounded text-[#FEE2C5]">
+            <div class="p-4 mb-4 bg-[#C0D6DF] flex items-center rounded text-black border-2 border-[#4F6D7A]">
                 <a href="/moistatused" class="h-full w-fit flex items-center mr-1">Tagasi</a> | Mõistatuse kustutamine
             </div>
-            <div class="flex flex-col h-full  text-center text-[#FEE2C5] lg:items-center mb-8">
-                <div class="flex flex-col w-full border-2 h-fit items-center text-center p-4 rounded-xl bg-[#414141] lg:flex-row-reverse lg:h-fit lg:items-start relative pb-16">
+            <div class="flex flex-col h-full  text-center text-black lg:items-center mb-8">
+                <div class="flex flex-col w-full h-fit items-center text-center p-4 rounded-xl bg-[#C0D6DF] lg:flex-row-reverse lg:h-fit lg:items-start relative pb-16 border-2 border-[#4F6D7A]">
                     
                     <div class="flex flex-col w-full h-fit">
                         <div class="w-full h-full text-lg font-bold lg:w-3/4 lg:text-2xl">
-                            <h1 class="text-[#FEE2C5] w-full text-start">{{ $question->question }}</h1>
+                            <h1 class="text-black w-full text-start">{{ $question->question }}</h1>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                 </form>
                 <form action="/moistatused" method="get" class="w-full">
 
-                    <input type="submit" value="Ei" class="w-full bg-[#414141] rounded p-3 mb-4">
+                    <input type="submit" value="Ei" class="w-full bg-[#C0D6DF] rounded p-3 mb-4 border-2 border-[#4F6D7A]">
 
                 </form>
             </div>
