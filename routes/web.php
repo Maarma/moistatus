@@ -35,6 +35,14 @@ Route::middleware('auth')->group(function () {
         return view('questions-create');
     })->name('questions.create');
     Route::post('/moistatused/create/post', [QuestionsController::class, 'createQuestions'])->name('admin.questions.create');
+
+    Route::get('/moistatused/edit/{id}', function ($id) {
+        $question = DB::table('questions')->where('id', $id)->get()[0];
+        return view('questions-edit', [
+            'question' => $question
+        ]);
+    })->name('questions.edit');
+    Route::post('/moistatused/edit/post', [QuestionsController::class, 'editQuestions'])->name('admin.questions.update');
 });
 
 require __DIR__.'/auth.php';

@@ -77,4 +77,19 @@ class QuestionsController extends Controller
         $item->save();
         return redirect()->route('questions')->with('success', 'Data updated successfully.');
     }
+
+    public function editQuestions(Request $request, )
+    {
+        $id = $request->input('id');
+        $item = Questions::where('id', $id)->get()[0];
+        $item->question = $request->input('question');
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $filename = time() . '.' . $image->getClientOriginalExtension();
+        //     $path = $image->storeAs('public/images/', $filename);
+        //     $item->image = $filename;
+        // }
+        $item->save();
+        return redirect()->route('questions')->with('success', 'Data updated successfully.');
+    }
 }
