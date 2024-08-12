@@ -11,4 +11,9 @@ class questions extends Model
     protected $fillable = ['question'];
 
     use HasFactory;
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }

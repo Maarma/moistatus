@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionsController;
+use App\Models\questions;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,14 +12,14 @@ Route::get('/', function () {
 
 
 Route::get('/moistatused', function () {
-    $question = DB::table('questions')->get();
+    $question = questions::get();
     return view('questions', [
         'question' => $question,
     ]);
 })->name('questions');
 
 Route::get('/moistatus/{id}', function ($id) {
-    $question = DB::table('questions')->find($id);
+    $question = questions::with('images')->find($id);
     return view('riddle', [
         'question' => $question,
     ]);
@@ -32,12 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/moistatused/create', function () {
-        return view('questions-create');
+        $images = [];
+
+        return view('questions-create', [
+            'images' => $images 
+        ]);
     })->name('questions.create');
     Route::post('/moistatused/create/post', [QuestionsController::class, 'createQuestions'])->name('admin.questions.create');
 
     Route::get('/moistatused/edit/{id}', function ($id) {
-        $question = DB::table('questions')->where('id', $id)->get()[0];
+        $question = questions::where('id', $id)->get()[0];
         return view('questions-edit', [
             'question' => $question
         ]);

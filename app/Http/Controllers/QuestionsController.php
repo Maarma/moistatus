@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\questions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionsController extends Controller
 {
@@ -64,21 +67,48 @@ class QuestionsController extends Controller
     }
 
 
-    public function createQuestions(Request $request, )
+    public function createQuestions(Request $request)
     {
         $item = new Questions;
         $item->question = $request->input('questions');
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $filename = time() . '.' . $image->getClientOriginalExtension();
-        //     $path = $image->storeAs('public/images/', $filename);
-        //     $item->image = $filename;
-        // }
         $item->save();
+
+        $final_images = [];
+        $fetched_images = $request->file('images');
+
+        foreach ($fetched_images as $file) {
+            $fileName = $file->getClientOriginalName();
+            $imageValues = $request->input('image_values');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            $filePath = $file->storeAs('public/images', $filename);
+            $image_path = asset(Storage::url($filePath));
+
+            if (in_array($fileName, $imageValues)) {
+                $final_images[] = [
+                    'path' => $image_path,
+                    'isCorrectAnswer' => true,
+                    'questions_id' => $item->id
+                ];
+            } else {
+                $final_images[] = [
+                    'path' => $image_path,
+                    'isCorrectAnswer' => false,
+                    'questions_id' => $item->id
+                ];
+            }
+
+            Image::create([
+                'path' => $image_path,
+                'isCorrectAnswer' => in_array($fileName, $imageValues),
+                'questions_id' => $item->id
+            ]);
+        }
+
         return redirect()->route('questions')->with('success', 'Data updated successfully.');
     }
 
-    public function editQuestions(Request $request, )
+    public function editQuestions(Request $request,)
     {
         $id = $request->input('id');
         $item = Questions::where('id', $id)->get()[0];
@@ -93,7 +123,7 @@ class QuestionsController extends Controller
         return redirect()->route('questions')->with('success', 'Data updated successfully.');
     }
 
-    public function deleteQuestions(Request $request, )
+    public function deleteQuestions(Request $request,)
     {
         $id_list = explode('&', $_SERVER['QUERY_STRING']);
         $id = $id_list[0];
