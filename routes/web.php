@@ -19,7 +19,7 @@ Route::get('/moistatused', function () {
 })->name('questions');
 
 Route::get('/moistatus/{id}', function ($id) {
-    $question = questions::with('images')->find($id);
+    $question = questions::with('images')->findOrFail($id);
     return view('riddle', [
         'question' => $question,
     ]);

@@ -68,45 +68,44 @@ class QuestionsController extends Controller
 
 
     public function createQuestions(Request $request)
-    {
-        $item = new Questions;
-        $item->question = $request->input('questions');
-        $item->save();
+{
+    $item = new Questions;
+    $item->question = $request->input('questions');
+    $item->save();
 
-        $final_images = [];
-        $fetched_images = $request->file('images');
+    $final_images = [];
+    $fetched_images = $request->file('images');
+    $imageValues = $request->input('image_values', []);
 
-        foreach ($fetched_images as $file) {
-            $fileName = $file->getClientOriginalName();
-            $imageValues = $request->input('image_values');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+    foreach ($fetched_images as $file) {
+        // Generate a unique name for the file
+        $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-            $filePath = $file->storeAs('public/images', $filename);
-            $image_path = asset(Storage::url($filePath));
+        // Store the file and get its path
+        $filePath = $file->storeAs('public/images', $filename);
+        $image_path = asset(Storage::url($filePath));
 
-            if (in_array($fileName, $imageValues)) {
-                $final_images[] = [
-                    'path' => $image_path,
-                    'isCorrectAnswer' => true,
-                    'questions_id' => $item->id
-                ];
-            } else {
-                $final_images[] = [
-                    'path' => $image_path,
-                    'isCorrectAnswer' => false,
-                    'questions_id' => $item->id
-                ];
-            }
+        // Check if the current file name is in the list of correct answers
+        $isCorrectAnswer = in_array($file->getClientOriginalName(), $imageValues);
 
-            Image::create([
-                'path' => $image_path,
-                'isCorrectAnswer' => in_array($fileName, $imageValues),
-                'questions_id' => $item->id
-            ]);
-        }
+        // Store the image details in the final_images array
+        $final_images[] = [
+            'path' => $image_path,
+            'isCorrectAnswer' => $isCorrectAnswer,
+            'questions_id' => $item->id
+        ];
 
-        return redirect()->route('questions')->with('success', 'Data updated successfully.');
+        // Save the image details in the database
+        Image::create([
+            'path' => $image_path,
+            'isCorrectAnswer' => $isCorrectAnswer,
+            'questions_id' => $item->id
+        ]);
     }
+
+    return redirect()->route('questions')->with('success', 'Data updated successfully.');
+}
+
 
     public function editQuestions(Request $request,)
     {
