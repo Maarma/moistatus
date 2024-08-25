@@ -9,7 +9,8 @@ Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
 
-
+Route::view('/old', 'old')->name('old');
+Route::view('/today', 'today')->name('today');
 
 Route::get('/moistatused', function () {
     $question = questions::get();
