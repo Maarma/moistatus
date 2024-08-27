@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionsController;
 use App\Models\questions;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageUploadController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -11,6 +12,12 @@ Route::get('/', function () {
 
 Route::view('/old', 'old')->name('old');
 Route::view('/today', 'today')->name('today');
+
+Route::get('/upload', function () {
+    return view('upload');
+});
+
+Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
 
 Route::get('/moistatused', function () {
     $question = questions::get();
