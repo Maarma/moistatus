@@ -10,80 +10,35 @@ use Illuminate\Support\Facades\Storage;
 
 class QuestionsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(questions $questions)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(questions $questions)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, questions $questions)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(questions $questions)
-    {
-        //
-    }
-
-
+    
+    
     public function createQuestions(Request $request)
 {
+    // Validate the input data
+    $request->validate([
+        'questions' => 'required|string',
+        'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image_values' => 'nullable|array'
+    ]);
+
+    // Create a new question
     $item = new Questions;
     $item->question = $request->input('questions');
     $item->save();
 
     $final_images = [];
-    $fetched_images = $request->file('images');
+    $fetched_images = $request->file('images', []); // Get all uploaded images, or an empty array if none
     $imageValues = $request->input('image_values', []);
 
     foreach ($fetched_images as $file) {
         // Generate a unique name for the file
         $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-        // Store the file and get its path
-        $filePath = $file->storeAs('public/images', $filename);
-        $image_path = asset(Storage::url($filePath));
+        // Store the file in the 'public/images' directory
+        $file->move(public_path('images'), $filename);
+
+        // Generate the accessible URL for the stored image
+        $image_path = asset('images/' . $filename);
 
         // Check if the current file name is in the list of correct answers
         $isCorrectAnswer = in_array($file->getClientOriginalName(), $imageValues);

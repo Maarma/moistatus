@@ -1,17 +1,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const images = [
-            '{{ asset('storage/images/today1.JPG') }}',
-            '{{ asset('storage/images/today2.JPG') }}',
-            '{{ asset('storage/images/today3.JPG') }}',
-            '{{ asset('storage/images/today4.JPG') }}',
-            '{{ asset('storage/images/today5.JPG') }}',
-            '{{ asset('storage/images/today6.JPG') }}',
-            '{{ asset('storage/images/today7.JPG') }}',
-            '{{ asset('storage/images/today8.JPG') }}',
-            '{{ asset('storage/images/today9.JPG') }}',
-            '{{ asset('storage/images/today10.JPG') }}',
-            '{{ asset('storage/images/today11.JPG') }}'
+            '{{ asset('images/today1.JPG') }}',
+            '{{ asset('images/today2.JPG') }}',
+            '{{ asset('images/today3.JPG') }}',
+            '{{ asset('images/today4.JPG') }}',
+            '{{ asset('images/today5.JPG') }}',
+            '{{ asset('images/today6.JPG') }}',
+            '{{ asset('images/today7.JPG') }}',
+            '{{ asset('images/today8.JPG') }}',
+            '{{ asset('images/today9.JPG') }}',
+            '{{ asset('images/today10.JPG') }}',
+            '{{ asset('images/today11.JPG') }}'
         ];
 
         let currentIndex = 0;
@@ -58,7 +58,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
            
           
-                <img id="image-viewer" src="{{ asset('storage/images/today1.JPG') }}" alt="today Image" class="w-full cursor-pointer">
+                <img id="image-viewer" src="{{ asset('images/today1.JPG') }}" alt="today Image" class="w-[3/4] cursor-pointer">
           
 
         </div>

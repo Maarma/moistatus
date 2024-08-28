@@ -13,6 +13,10 @@ Route::get('/', function () {
 Route::view('/old', 'old')->name('old');
 Route::view('/today', 'today')->name('today');
 
+Route::get('/test', function () {
+    return 'Test route works!';
+});
+
 Route::get('/upload', function () {
     return view('upload');
 });

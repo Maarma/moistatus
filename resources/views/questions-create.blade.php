@@ -38,36 +38,42 @@
                             const reader = new FileReader();
 
                             reader.onload = function(e) {
-                                const div = document.createElement('div');
-                                div.classList.add('relative');
+                            const div = document.createElement('div');
+                            div.classList.add('relative', 'flex', 'items-start', 'justify-end', 'p-2');
 
-                                const img = document.createElement('img');
-                                img.src = e.target.result;
-                                img.alt = 'Image Preview';
-                                img.classList.add('w-full', 'h-auto');
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.alt = 'Image Preview';
+                            img.classList.add('w-full', 'h-auto');
 
-                                const checkbox = document.createElement('input');
-                                checkbox.type = 'checkbox';
-                                checkbox.name = 'image_values[]';
-                                checkbox.value = file.name;
-                                checkbox.classList.add('absolute', 'top-2', 'right-2');
-                                checkbox.checked = false;
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.name = 'image_values[]';
+                            checkbox.value = file.name;
+                            checkbox.classList.add('ml-2'); // margin-left for spacing
+                            checkbox.checked = false;
 
-                                const removeButton = document.createElement('button');
-                                removeButton.innerText = 'Remove';
-                                removeButton.type = 'button';
-                                removeButton.classList.add('absolute', 'top-2', 'left-2', 'bg-red-500', 'text-white', 'p-1', 'rounded');
-                                removeButton.onclick = function() {
-                                    div.remove();
-                                    selectedFiles = selectedFiles.filter(f => f.file !== file);
-                                    updateHiddenInput();
-                                };
-
-                                div.appendChild(img);
-                                div.appendChild(checkbox);
-                                div.appendChild(removeButton);
-                                previewContainer.appendChild(div);
+                            const removeButton = document.createElement('button');
+                            removeButton.innerText = 'Remove';
+                            removeButton.type = 'button';
+                            removeButton.classList.add('bg-red-500', 'text-white', 'p-1', 'rounded');
+                            removeButton.onclick = function() {
+                                div.remove();
+                                selectedFiles = selectedFiles.filter(f => f.file !== file);
+                                updateHiddenInput();
                             };
+
+                            div.appendChild(img);
+
+                            const controlsContainer = document.createElement('div');
+                            controlsContainer.classList.add('flex', 'flex-col', 'absolute', 'top-2', 'right-2');
+                            controlsContainer.appendChild(checkbox);
+                            controlsContainer.appendChild(removeButton);
+
+                            div.appendChild(controlsContainer);
+                            previewContainer.appendChild(div);
+                        };
+
 
                             reader.readAsDataURL(file);
                         }
