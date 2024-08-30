@@ -18,6 +18,15 @@
                     <x-nav-link :href="route('questions')" :active="request()->routeIs('questions')">
                         {{ __('mõistatused') }}
                     </x-nav-link>
+                    @if (Auth::user())
+                    <x-nav-link :href="route('images.list')" :active="request()->routeIs('images.list')">
+                        {{ __('pildid serveris') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('image.upload')" :active="request()->routeIs('image.upload')">
+                        {{ __('piltide upload') }}
+                    </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 

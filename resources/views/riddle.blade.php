@@ -17,6 +17,7 @@
                 @else
                     <p>No images available.</p>
                 @endif
+                <img scr="{{ asset('images/1724935772.jpg') }}" alt="?">
             </div>
 
         </div>

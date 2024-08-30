@@ -5,6 +5,7 @@ use App\Http\Controllers\QuestionsController;
 use App\Models\questions;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
+use Illuminate\Support\Facades\File; // Import the File facade
 
 Route::get('/', function () {
     return view('homepage');
@@ -16,12 +17,6 @@ Route::view('/today', 'today')->name('today');
 Route::get('/test', function () {
     return 'Test route works!';
 });
-
-Route::get('/upload', function () {
-    return view('upload');
-});
-
-Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
 
 Route::get('/moistatused', function () {
     $question = questions::get();
@@ -40,6 +35,22 @@ Route::get('/moistatus/{id}', function ($id) {
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/upload', function () {
+        return view('upload');
+    });
+    
+    Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
+    Route::get('/imagesStored', function () {
+        // Define the path to the folder containing images
+        $folderPath = public_path('images');
+    
+        // Get all image files from the folder
+        $images = File::files($folderPath);
+    
+        // Pass the images to the Blade view
+        return view('imagesStored', ['images' => $images]);
+    })->name('images.list');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
