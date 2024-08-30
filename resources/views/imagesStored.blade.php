@@ -15,6 +15,15 @@
 
                                 <!-- Display the image filename -->
                                 <p class="mt-2">{{ $image->getFilename() }}</p>
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('images.delete', $image->getFilename()) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this image?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="mt-2 bg-red-500 text-white py-1 px-3 rounded">
+                                        Delete
+                                    </button>
+                                </form>
                             </div>
                         @endforeach
                     </div>

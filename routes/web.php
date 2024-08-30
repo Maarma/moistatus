@@ -51,6 +51,19 @@ Route::middleware('auth')->group(function () {
         return view('imagesStored', ['images' => $images]);
     })->name('images.list');
 
+    Route::delete('/imagesStored/{image}', function ($image) {
+        // Define the path to the folder containing images
+        $filePath = public_path('images/' . $image);
+    
+        // Check if the file exists and delete it
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+            return redirect()->route('images.list')->with('success', 'Image deleted successfully.');
+        }
+    
+        return redirect()->route('images.list')->with('error', 'Image not found.');
+    })->name('images.delete');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
