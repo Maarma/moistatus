@@ -27,6 +27,7 @@ Route::get('/moistatused', function () {
 
 Route::get('/moistatus/{id}', function ($id) {
     $question = questions::with('images')->findOrFail($id);
+    //dd($question);
     return view('riddle', [
         'question' => $question,
     ]);
